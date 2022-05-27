@@ -62,6 +62,18 @@ struct RecorderView: View {
                         Slider(value: $recorder.setting.samplingRate, in: 1 ... 200, step: 1)
                     }
                     
+                    Section{
+                        Toggle(isOn: $recorder.setting.accelerationToggle) {
+                            Text("Acceleration")
+                        }
+                        Toggle(isOn: $recorder.setting.rotationRateToggle) {
+                            Text("Rotation Rate")
+                        }
+                        Toggle(isOn: $recorder.setting.magneticFieldToggle) {
+                            Text("Magnetic Field")
+                        }
+                    }
+                    
                     
                 } else {
                     

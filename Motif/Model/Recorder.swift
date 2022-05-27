@@ -15,6 +15,9 @@ class Recorder: ObservableObject {
         var samplingRate: Double = 100
         var useTimer: Bool = false
         var endTime: Date = Date()
+        var accelerationToggle: Bool = true
+        var rotationRateToggle: Bool = true
+        var magneticFieldToggle: Bool = true
     }
     
     private let encoder = JSONEncoder()
