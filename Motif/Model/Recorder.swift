@@ -64,9 +64,15 @@ class Recorder: ObservableObject {
         manager.deviceMotionUpdateInterval  = samplingInterval
         
         // Start data updates
-        manager.startAccelerometerUpdates()
-        manager.startGyroUpdates()
-        manager.startMagnetometerUpdates()
+        if (setting.accelerationToggle){
+            manager.startAccelerometerUpdates()
+        }
+        if (setting.rotationRateToggle){
+            manager.startGyroUpdates()
+        }
+        if (setting.magneticFieldToggle){
+            manager.startMagnetometerUpdates()
+        }
         manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
         
         // Initialize data storage
