@@ -84,7 +84,7 @@ struct RecorderView: View {
                         ItemRow(name: "Time Elapsed", value: "")
                     }
                     
-                    if entry.accelerometerData != nil {
+                    if entry.accelerometerData != nil && recorder.setting.accelerationToggle {
                         Section(header: Text("Acceleration").font(.subheadline).bold()) {
                             ItemRow(name: "timestamp", value: dateFormatter.string(from: entry.accelerometerData.timestamp))
                             ItemRow(name: "x", value: "\(entry.accelerometerData.acceleration.x) G")
@@ -93,7 +93,7 @@ struct RecorderView: View {
                         }
                     }
                     
-                    if entry.gyroData != nil {
+                    if entry.gyroData != nil && recorder.setting.rotationRateToggle{
                         Section(header: Text("Gyroscope").font(.subheadline).bold()) {
                             ItemRow(name: "timestamp", value: dateFormatter.string(from: entry.gyroData.timestamp))
                             ItemRow(name: "x", value: "\(entry.gyroData.rotationRate.x) rad/s")
@@ -102,7 +102,7 @@ struct RecorderView: View {
                         }
                     }
                     
-                    if entry.magnetometerData != nil {
+                    if entry.magnetometerData != nil && recorder.setting.magneticFieldToggle{
                         Section(header: Text("Magnetometer").font(.subheadline).bold()) {
                             ItemRow(name: "timestamp", value: dateFormatter.string(from: entry.magnetometerData.timestamp))
                             ItemRow(name: "x", value: "\(entry.magnetometerData.magneticField.x) mT")
