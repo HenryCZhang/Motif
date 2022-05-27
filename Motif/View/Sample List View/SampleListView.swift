@@ -37,25 +37,6 @@ struct SampleListView: View {
                         
                         SampleRow(sample: sample)
                             .padding(.vertical)
-                            .contextMenu {
-                                
-                                Button(action: {
-                                    self.selectedID = [sample.id]
-                                    self.isShowingShareActivitySheet.toggle()
-                                    self.shareActivitySheetFileFormat = .csv
-                                }) {
-                                    Text("Share as CSV")
-                                }
-                                
-                                Button(action: {
-                                    self.selectedID = [sample.id]
-                                    self.isShowingShareActivitySheet.toggle()
-                                    self.shareActivitySheetFileFormat = .json
-                                }) {
-                                    Text("Share as JSON")
-                                }
-                        }
-                        
                     }
                 }
                 .onDelete(perform: delete)
