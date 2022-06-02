@@ -72,12 +72,16 @@ struct MotionDataEntry: Codable, Equatable, Hashable, Identifiable {
     ]
     
     init(accelerometerData: CMAccelerometerData, gyroData: CMGyroData, magnetometerData: CMMagnetometerData, deviceMotion: CMDeviceMotion) {
-        
         self.accelerometerData = AccelerometerData(fromData: accelerometerData)
         self.gyroData = GyroData(fromData: gyroData)
         self.magnetometerData = MagnetometerData(fromData: magnetometerData)
         self.deviceMotion = DeviceMotion(fromData: deviceMotion)
-        
+    }
+    
+    init(accelerometerData: CMAccelerometerData, gyroData: CMGyroData, magnetometerData: CMMagnetometerData) {
+        self.accelerometerData = AccelerometerData(fromData: accelerometerData)
+        self.gyroData = GyroData(fromData: gyroData)
+        self.magnetometerData = MagnetometerData(fromData: magnetometerData)
     }
     
     init() {}
