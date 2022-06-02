@@ -10,7 +10,7 @@ import SwiftUI
 struct SampleRow: View {
     
     var sample: MotionDataSample
-    
+
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
@@ -39,7 +39,6 @@ struct SampleRow: View {
                         .font(.caption)
                         .lineLimit(1)
                 }.layoutPriority(1)
-                Spacer()
             }
         }
     }

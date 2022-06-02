@@ -34,15 +34,15 @@ struct SampleListView: View {
             List(selection: $selectedID) {
                 ForEach(recorder.samples) { sample in
                     NavigationLink(destination: SampleDetailView(sample: sample)) {
-                        
-                        SampleRow(sample: sample)
-                            .padding(.vertical)
+                        HStack(alignment: .bottom){
+                            SampleRow(sample: sample)
+                        }.padding(.bottom)
                     }
                 }
                 .onDelete(perform: delete)
                 .onMove(perform: move)
             }
-            .listStyle(GroupedListStyle())
+            
             .navigationBarTitle("Samples")
             .navigationBarItems(
                 leading: leadingItems.opacity(editMode == .active ? 1.0 : 0.0),
@@ -53,6 +53,7 @@ struct SampleListView: View {
             })
             .environment(\.editMode, self.$editMode)
         }
+        
     }
     
     // MARK: - Custom Views
