@@ -36,8 +36,9 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     var magnetometerDataFirstTimestamp:  Date? { entries.first?.magnetometerData?.timestamp }
     var deviceMotionDataFirstTimestamp:  Date? { entries.first?.deviceMotion?.timestamp }
     var firstTimestamp: Date? {
-        let timestamps = [accelerometerDataFirstTimestamp, gyroDataFirstTimestamp, magnetometerDataFirstTimestamp, deviceMotionDataFirstTimestamp]
-        return timestamps.compactMap { $0 }.min()
+//        let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp, deviceMotionDataLastTimestamp]
+//        return timestamps.compactMap { $0 }.min()
+        return startTime
     }
     
     var accelerometerDataLastTimestamp:  Date? { entries.last?.accelerometerData?.timestamp }
@@ -46,6 +47,9 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     var deviceMotionDataLastTimestamp:   Date? { entries.last?.deviceMotion?.timestamp }
     var lastTimestamp: Date? {
         let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp, deviceMotionDataLastTimestamp]
+        if(timestamps.compactMap { $0 }.max() == nil){
+            return Date()
+        }
         return timestamps.compactMap { $0 }.max()
     }
     
