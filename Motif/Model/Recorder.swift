@@ -12,12 +12,13 @@ import CoreMotion
 class Recorder: ObservableObject {
     
     struct RecordSetting {
-        var samplingRate: Double = 100
+        var samplingRate: Double = 200
         var useTimer: Bool = false
         var endTime: Date = Date()
         var accelerationToggle: Bool = true
         var rotationRateToggle: Bool = true
         var magneticFieldToggle: Bool = true
+        var extraDataToggle: Bool = true
     }
     
     private let encoder = JSONEncoder()
@@ -73,7 +74,9 @@ class Recorder: ObservableObject {
         if (setting.magneticFieldToggle){
             manager.startMagnetometerUpdates()
         }
-        manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
+        if(setting.extraDataToggle){
+            manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
+        }
         
         // Initialize data storage
         currentDataRecord = MotionDataSample(startTime: Date(), samplingRate: setting.samplingRate)
@@ -82,19 +85,26 @@ class Recorder: ObservableObject {
         timerSubscription = Timer.publish(every: samplingInterval, on: .main, in: .common)
             .autoconnect()
             .sink { date in
-                guard let accelerometerData = self.manager.accelerometerData,
-                    let gyroData = self.manager.gyroData,
-                    let magnetometerData = self.manager.magnetometerData,
+                    let accelerometerData = self.manager.accelerometerData
+                    let gyroData = self.manager.gyroData
+                    let magnetometerData = self.manager.magnetometerData
                     let deviceMotion = self.manager.deviceMotion
-                    else { return }
-                
+                    
+                if(self.setting.extraDataToggle){
+                    self.currentDataEntry = MotionDataEntry(
+                        accelerometerData: accelerometerData!,
+                        gyroData: gyroData!,
+                        magnetometerData: magnetometerData!,
+                        deviceMotion: deviceMotion!
+                    )
+                }else{
+                    self.currentDataEntry = MotionDataEntry(
+                        accelerometerData: accelerometerData!,
+                        gyroData: gyroData!,
+                        magnetometerData: magnetometerData!
+                    )
+                }
                 // Save motion data to entry and record
-                self.currentDataEntry = MotionDataEntry(
-                    accelerometerData: accelerometerData,
-                    gyroData: gyroData,
-                    magnetometerData: magnetometerData,
-                    deviceMotion: deviceMotion
-                )
                 self.currentDataRecord?.addEntry(self.currentDataEntry)
         }
         
@@ -115,7 +125,7 @@ class Recorder: ObservableObject {
         
         // Add new record to record list
         guard let record = currentDataRecord else { return }
-        samples.append(record)
+        samples.insert(record, at: 0)
         
         #if DEBUG
         print("Appended sample to samples. Samples count: \(samples.count)")

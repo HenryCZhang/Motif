@@ -72,6 +72,9 @@ struct RecorderView: View {
                         Toggle(isOn: $recorder.setting.magneticFieldToggle) {
                             Text("Magnetic Field")
                         }
+                        Toggle(isOn: $recorder.setting.extraDataToggle) {
+                            Text("Extra Data")
+                        }
                     }
                     
                     
@@ -81,7 +84,7 @@ struct RecorderView: View {
                     
                     Section(header: Text("Time").font(.subheadline).bold()) {
                         ItemRow(name: "Start Time", value: dateFormatter.string(from: recorder.currentDataRecord!.startTime))
-                        ItemRow(name: "Time Elapsed", value: "")
+                        ItemRow(name: "Time Elapsed", value: "\(Int(Date().timeIntervalSince(recorder.currentDataRecord!.startTime)))s")
                     }
                     
                     if entry.accelerometerData != nil && recorder.setting.accelerationToggle {
