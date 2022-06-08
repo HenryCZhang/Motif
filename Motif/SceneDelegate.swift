@@ -17,9 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        // Set Form's background color to clear
-        UITableView.appearance().backgroundColor = .clear
-        
         // Create the SwiftUI view that provides the window contents.
         let home = Home()
         let recorder = Recorder()
