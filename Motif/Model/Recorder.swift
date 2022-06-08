@@ -18,7 +18,7 @@ class Recorder: ObservableObject {
         var accelerationToggle: Bool = true
         var rotationRateToggle: Bool = true
         var magneticFieldToggle: Bool = true
-        var extraDataToggle: Bool = true
+        var extraDataToggle: Bool = false
     }
     
     private let encoder = JSONEncoder()
@@ -51,12 +51,16 @@ class Recorder: ObservableObject {
     init() {
         loadSampleListFromDisk()
     }
-
+    
     // MARK: - Methods
     
     private func startRecording() {
         
         guard manager.isDeviceAvailable == true else { return }
+        
+        if (!(setting.accelerationToggle && setting.rotationRateToggle && setting.magneticFieldToggle)){
+            setting.extraDataToggle = false
+        }
         
         // Set sampling intervals
         manager.accelerometerUpdateInterval = samplingInterval
@@ -74,7 +78,7 @@ class Recorder: ObservableObject {
         if (setting.magneticFieldToggle){
             manager.startMagnetometerUpdates()
         }
-        if(setting.extraDataToggle){
+        if (setting.extraDataToggle){
             manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
         }
         
@@ -85,28 +89,24 @@ class Recorder: ObservableObject {
         timerSubscription = Timer.publish(every: samplingInterval, on: .main, in: .common)
             .autoconnect()
             .sink { date in
-                    let accelerometerData = self.manager.accelerometerData
-                    let gyroData = self.manager.gyroData
-                    let magnetometerData = self.manager.magnetometerData
-                    let deviceMotion = self.manager.deviceMotion
-                    
-                if(self.setting.extraDataToggle){
-                    self.currentDataEntry = MotionDataEntry(
-                        accelerometerData: accelerometerData!,
-                        gyroData: gyroData!,
-                        magnetometerData: magnetometerData!,
-                        deviceMotion: deviceMotion!
-                    )
-                }else{
-                    self.currentDataEntry = MotionDataEntry(
-                        accelerometerData: accelerometerData!,
-                        gyroData: gyroData!,
-                        magnetometerData: magnetometerData!
-                    )
-                }
+                let accelerometerData = self.manager.accelerometerData
+                let gyroData = self.manager.gyroData
+                let magnetometerData = self.manager.magnetometerData
+                let deviceMotion = self.manager.deviceMotion
+                
+                self.currentDataEntry = MotionDataEntry(
+                    accelerometerData: accelerometerData,
+                    accelerationToggle: self.setting.accelerationToggle,
+                    gyroData: gyroData,
+                    rotationRateToggle: self.setting.rotationRateToggle,
+                    magnetometerData: magnetometerData,
+                    magneticFieldToggle: self.setting.magneticFieldToggle,
+                    deviceMotion: deviceMotion,
+                    extraDataToggle: self.setting.extraDataToggle
+                )
                 // Save motion data to entry and record
                 self.currentDataRecord?.addEntry(self.currentDataEntry)
-        }
+            }
         
     }
     
@@ -127,26 +127,26 @@ class Recorder: ObservableObject {
         guard let record = currentDataRecord else { return }
         samples.insert(record, at: 0)
         
-        #if DEBUG
+#if DEBUG
         print("Appended sample to samples. Samples count: \(samples.count)")
         
         // Print JSON of sample
-//        var data: Data
-//        do {
-//            data = try encoder.encode(samples)
-//        } catch {
-//            print("Failed to encode recordList.")
-//            return
-//        }
-//        let string = String(data: data, encoding: .utf8)!
-//        print(string)
-        #endif
+        //        var data: Data
+        //        do {
+        //            data = try encoder.encode(samples)
+        //        } catch {
+        //            print("Failed to encode recordList.")
+        //            return
+        //        }
+        //        let string = String(data: data, encoding: .utf8)!
+        //        print(string)
+#endif
         
         // Clear motion data
         currentDataEntry = MotionDataEntry()
         currentDataRecord = nil
     }
-
+    
     private func saveSampleListToDisk() {
         
         // Encode samples to JSON data
@@ -165,10 +165,10 @@ class Recorder: ObservableObject {
             print("Failed to write recordList data to URL.")
         }
         
-        #if DEBUG
+#if DEBUG
         print("Sample list saved to disk with \(samples.count) samples")
-        #endif
-
+#endif
+        
     }
     
     private func loadSampleListFromDisk() {
@@ -178,9 +178,9 @@ class Recorder: ObservableObject {
         do {
             data = try Data(contentsOf: sampleListFileURL)
         } catch {
-            #if DEBUG
+#if DEBUG
             print("Failed to read recordList data from disk.")
-            #endif
+#endif
             return
         }
         
@@ -203,8 +203,8 @@ extension CMMotionManager {
     
     var isDeviceAvailable: Bool {
         return isAccelerometerAvailable
-            && isGyroAvailable
-            && isMagnetometerAvailable
-            && isDeviceMotionAvailable
+        && isGyroAvailable
+        && isMagnetometerAvailable
+        && isDeviceMotionAvailable
     }
 }

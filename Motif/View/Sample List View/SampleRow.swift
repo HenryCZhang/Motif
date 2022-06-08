@@ -40,6 +40,7 @@ struct SampleRow: View {
                         .lineLimit(1)
                 }.layoutPriority(1)
             }
+            Spacer()
         }
     }
 }

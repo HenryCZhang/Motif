@@ -42,7 +42,7 @@ struct SampleDetailView: View {
                         value: "\(sample.entries.count)")
             }
             
-            if(sample.entries.first?.accelerometerData.acceleration.x != nil){
+            if(sample.entries.first?.accelerometerData?.acceleration.x != nil){
                 Section(header: Text("Raw Acceleration").font(.subheadline).bold()) {
                     HStack {
                         Text("x").font(.headline)
@@ -67,7 +67,7 @@ struct SampleDetailView: View {
                 }
             }
             
-            if(sample.entries.first?.gyroData.rotationRate.x != nil){
+            if(sample.entries.first?.gyroData?.rotationRate.x != nil){
                 Section(header: Text("Raw Rotation Rate").font(.subheadline).bold()) {
                     
                     HStack {
@@ -92,7 +92,7 @@ struct SampleDetailView: View {
                 }
             }
             
-            if(sample.entries.first?.magnetometerData.magneticField.x != nil){
+            if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
                 Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
                     
                     HStack {

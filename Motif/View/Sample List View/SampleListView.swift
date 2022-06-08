@@ -43,7 +43,7 @@ struct SampleListView: View {
                 .onMove(perform: move)
             }
             
-            .navigationBarTitle("Samples")
+            .navigationTitle("Samples")
             .navigationBarItems(
                 leading: leadingItems.opacity(editMode == .active ? 1.0 : 0.0),
                 trailing: EditButton()
@@ -123,10 +123,20 @@ struct SampleListView: View {
     }
 }
 
+func sample2() ->some ObservableObject {
+    let recorder = Recorder()
+    recorder.samples = MotionDataSample.previewSamples
+    return recorder
+}
+
 struct SamplesList_Previews: PreviewProvider {
     static var previews: some View {
-        let recorder = Recorder()
-        recorder.samples = MotionDataSample.previewSamples
-        return SampleListView().environmentObject(recorder)
+        
+        Group {
+            SampleListView().environmentObject(sample2())
+            
+            SampleListView().environmentObject(sample2()).colorScheme(.dark)
+        }
+        
     }
 }

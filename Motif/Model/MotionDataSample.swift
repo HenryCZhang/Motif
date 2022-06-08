@@ -27,17 +27,9 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     ]
     static let metadataKeyPaths = Self.keyPathsAndTitles.map { $0.0 }
     static let metadataTitles = Self.keyPathsAndTitles.map { $0.1 }
-    static let dataKeyPaths = MotionDataEntry.keyPathsAndTitles.map { $0.0 }
-    static let dataTitles = MotionDataEntry.keyPathsAndTitles.map { $0.1 }
     
     // MARK: - Computed Properties
-    var accelerometerDataFirstTimestamp: Date? { entries.first?.accelerometerData?.timestamp }
-    var gyroDataFirstTimestamp:          Date? { entries.first?.gyroData?.timestamp }
-    var magnetometerDataFirstTimestamp:  Date? { entries.first?.magnetometerData?.timestamp }
-    var deviceMotionDataFirstTimestamp:  Date? { entries.first?.deviceMotion?.timestamp }
     var firstTimestamp: Date? {
-//        let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp, deviceMotionDataLastTimestamp]
-//        return timestamps.compactMap { $0 }.min()
         return startTime
     }
     
@@ -58,7 +50,7 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
         let dateDifference = DateInterval(start: start, end: end)
         return dateDifference.duration
     }
-
+    
     // MARK: - Methods
     mutating func addEntry(_ entry: MotionDataEntry) {
         entries.append(entry)
@@ -66,7 +58,21 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     
     func encodeToCSV() -> String {
         let delimiter = ","
-        let titles = ["No"] + Self.metadataTitles + Self.dataTitles
+        var dataKeyPathsCollection: [(PartialKeyPath<MotionDataEntry>, String)] = []
+        if (entries.first?.accelerometerData != nil){
+            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.acc)
+        }
+        if (entries.first?.gyroData != nil){
+            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.gyro)
+        }
+        if (entries.first?.magnetometerData != nil){
+            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.magnet)
+        }
+        if (entries.first?.deviceMotion != nil){
+            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.device)
+        }
+        
+        let titles = ["No"] + Self.metadataTitles + dataKeyPathsCollection.map{ $0.1 }
         let container = CSVContainer(titles: titles, delimiter: delimiter)
         
         for (index, data) in entries.enumerated() {
@@ -76,7 +82,7 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
             for keyPath in Self.metadataKeyPaths {
                 row.append(stringFlatten(self[keyPath: keyPath]))
             }
-            for keyPath in Self.dataKeyPaths {
+            for keyPath in dataKeyPathsCollection.map({ $0.0 }) {
                 row.append(stringFlatten(data[keyPath: keyPath]))
             }
             
