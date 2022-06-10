@@ -58,7 +58,7 @@ class Recorder: ObservableObject {
         
         guard manager.isDeviceAvailable == true else { return }
         
-        if (!(setting.accelerationToggle && setting.rotationRateToggle && setting.magneticFieldToggle)){
+        if (!(setting.accelerationToggle || setting.rotationRateToggle || setting.magneticFieldToggle)){
             setting.extraDataToggle = false
         }
         
@@ -86,28 +86,30 @@ class Recorder: ObservableObject {
         currentDataRecord = MotionDataSample(startTime: Date(), samplingRate: setting.samplingRate)
         
         // Activate timer
-        timerSubscription = Timer.publish(every: samplingInterval, on: .main, in: .common)
-            .autoconnect()
-            .sink { date in
-                let accelerometerData = self.manager.accelerometerData
-                let gyroData = self.manager.gyroData
-                let magnetometerData = self.manager.magnetometerData
-                let deviceMotion = self.manager.deviceMotion
-                
-                self.currentDataEntry = MotionDataEntry(
-                    accelerometerData: accelerometerData,
-                    accelerationToggle: self.setting.accelerationToggle,
-                    gyroData: gyroData,
-                    rotationRateToggle: self.setting.rotationRateToggle,
-                    magnetometerData: magnetometerData,
-                    magneticFieldToggle: self.setting.magneticFieldToggle,
-                    deviceMotion: deviceMotion,
-                    extraDataToggle: self.setting.extraDataToggle
-                )
-                // Save motion data to entry and record
-                self.currentDataRecord?.addEntry(self.currentDataEntry)
-            }
-        
+        DispatchQueue.main.async {
+            self.timerSubscription = Timer.publish(every: self.samplingInterval, on: .main, in: .common)
+                .autoconnect()
+                .sink { date in
+                    
+                    let accelerometerData = self.manager.accelerometerData
+                    let gyroData = self.manager.gyroData
+                    let magnetometerData = self.manager.magnetometerData
+                    let deviceMotion = self.manager.deviceMotion
+                    
+                    self.currentDataEntry = MotionDataEntry(
+                        accelerometerData: accelerometerData,
+                        accelerationToggle: self.setting.accelerationToggle,
+                        gyroData: gyroData,
+                        rotationRateToggle: self.setting.rotationRateToggle,
+                        magnetometerData: magnetometerData,
+                        magneticFieldToggle: self.setting.magneticFieldToggle,
+                        deviceMotion: deviceMotion,
+                        extraDataToggle: self.setting.extraDataToggle
+                    )
+                    // Save motion data to entry and record
+                    self.currentDataRecord?.addEntry(self.currentDataEntry)
+                }
+        }
     }
     
     private func stopRecording() {
