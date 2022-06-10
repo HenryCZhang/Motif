@@ -67,7 +67,6 @@ struct LineChart: View {
     }
     
     func getPoints(fromGeometryProxy geometry: GeometryProxy) -> [CGPoint] {
-        
         let widthPerUnit: CGFloat = {
             if self.data.count <= 1 {
                 return 0
@@ -122,6 +121,8 @@ struct LineChart: View {
 }
 
 struct LineChart_Previews: PreviewProvider {
+    
+    
     
     static var data: [(Double, Double)] = [
         (1.0, 1.0),

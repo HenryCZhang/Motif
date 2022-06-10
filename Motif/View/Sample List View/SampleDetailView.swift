@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import Surge
 
 struct SampleDetailView: View {
     var sample: MotionDataSample
+    
+    init(sample: MotionDataSample) {
+        self.sample = sample
+    }
     
     @State var isShowingShareActionSheet = false
     @State var isShowingShareActivitySheet = false
@@ -49,21 +54,45 @@ struct SampleDetailView: View {
                         LineChart(
                             data: sample.entries.map {
                                 ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
+                    }.padding()
+                    
+                    HStack {
+                        Text("x-FFT").font(.headline)
+                        LineChart(
+                            data: sample.entries.enumerated().map { (index,element) in
+                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.x})[index]) })
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
-                            data: sample.entries.map { ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.y) })
-                            .frame(height: 100)
+                            data: sample.entries.enumerated().map { (index,element) in
+                                (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.y) })
+                        .frame(height: 100)
+                    }.padding()
+                    HStack {
+                        Text("y-FFT").font(.headline)
+                        LineChart(
+                            data: sample.entries.enumerated().map { (index,element) in
+                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.y})[index]) })
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
-                            data: sample.entries.map { ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.z) })
-                            .frame(height: 100)
+                            data: sample.entries.enumerated().map { (index,element) in
+                                (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.z) })
+                        .frame(height: 100)
                     }.padding()
-
+                    HStack {
+                        Text("z-FFT").font(.headline)
+                        LineChart(
+                            data: sample.entries.enumerated().map { (index,element) in
+                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.z})[index]) })
+                        .frame(height: 100)
+                    }.padding()
+                    
                 }
             }
             
@@ -74,19 +103,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -99,19 +128,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -124,19 +153,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -147,19 +176,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -170,19 +199,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -193,19 +222,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -216,19 +245,19 @@ struct SampleDetailView: View {
                         Text("x").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.x) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("y").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.y) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     HStack {
                         Text("z").font(.headline)
                         LineChart(
                             data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.z) })
-                            .frame(height: 100)
+                        .frame(height: 100)
                     }.padding()
                     
                 }
@@ -246,10 +275,10 @@ struct SampleDetailView: View {
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(self.dateString), displayMode: .inline)
         .navigationBarItems(trailing:
-            Button(action: {
-                self.isShowingShareActionSheet.toggle()
-            }) {
-                Image(systemName: "square.and.arrow.up")
+                                Button(action: {
+            self.isShowingShareActionSheet.toggle()
+        }) {
+            Image(systemName: "square.and.arrow.up")
                 .actionSheet(isPresented: $isShowingShareActionSheet, content: { self.shareActionSheet })
         })
         .sheet(isPresented: $isShowingShareActivitySheet, content: {
@@ -270,7 +299,7 @@ struct SampleDetailView: View {
             .cancel()
         ])
     }
-
+    
 }
 
 struct SampleDetailView_Previews: PreviewProvider {
