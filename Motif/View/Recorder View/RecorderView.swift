@@ -15,7 +15,7 @@ struct RecorderView: View {
         
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd HH:mm:ss.SSSS"
+        formatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
         return formatter
     }()
     
@@ -63,18 +63,20 @@ struct RecorderView: View {
                     }
                     
                     Section{
-                        Toggle(isOn: $recorder.setting.accelerationToggle) {
+                        Toggle(isOn: $recorder.setting.accelerationToggle.animation()) {
                             Text("Acceleration")
                         }
-                        Toggle(isOn: $recorder.setting.rotationRateToggle) {
+                        Toggle(isOn: $recorder.setting.rotationRateToggle.animation()) {
                             Text("Rotation Rate")
                         }
-                        Toggle(isOn: $recorder.setting.magneticFieldToggle) {
+                        Toggle(isOn: $recorder.setting.magneticFieldToggle.animation()) {
                             Text("Magnetic Field")
                         }
-                        Toggle(isOn: $recorder.setting.extraDataToggle) {
+                        if(recorder.setting.accelerationToggle && recorder.setting.rotationRateToggle && recorder.setting.magneticFieldToggle){
+                            Toggle(isOn: $recorder.setting.extraDataToggle.animation()) {
                             Text("Extra Data")
-                        }
+                        }}
+                        
                     }
                     
                     
@@ -127,11 +129,12 @@ struct RecorderView: View {
                     }
                     .toggleStyle(CircularToggleStyle(sideLength: 60))
                     .padding(10)
+                    .disabled(!(recorder.setting.accelerationToggle || recorder.setting.rotationRateToggle || recorder.setting.magneticFieldToggle))
                     
                     Spacer()
                 }
             }
-            .navigationBarTitle(recorder.isRecording ? "Recording" : "Record")
+            .navigationTitle(recorder.isRecording ? "Recording" : "Record")
             .navigationBarItems(trailing:
                 Button(self.recorder.isRecording ? "Stop" : "") {
                     self.recorder.isRecording = false
