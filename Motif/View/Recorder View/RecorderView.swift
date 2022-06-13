@@ -12,7 +12,7 @@ struct RecorderView: View {
     
     @EnvironmentObject var recorder: Recorder
     var entry: MotionDataEntry { recorder.currentDataEntry }
-        
+    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
@@ -26,7 +26,7 @@ struct RecorderView: View {
     
     var body: some View {
         
-         NavigationView {
+        NavigationView {
             
             Form {
                 if recorder.isRecording == false {
@@ -72,11 +72,6 @@ struct RecorderView: View {
                         Toggle(isOn: $recorder.setting.magneticFieldToggle.animation()) {
                             Text("Magnetic Field")
                         }
-                        if(recorder.setting.accelerationToggle && recorder.setting.rotationRateToggle && recorder.setting.magneticFieldToggle){
-                            Toggle(isOn: $recorder.setting.extraDataToggle.animation()) {
-                            Text("Extra Data")
-                        }}
-                        
                     }
                     
                     
@@ -136,11 +131,11 @@ struct RecorderView: View {
             }
             .navigationTitle(recorder.isRecording ? "Recording" : "Record")
             .navigationBarItems(trailing:
-                Button(self.recorder.isRecording ? "Stop" : "") {
-                    self.recorder.isRecording = false
-                    #if DEBUG
-                    print("set")
-                    #endif
+                                    Button(self.recorder.isRecording ? "Stop" : "") {
+                self.recorder.isRecording = false
+#if DEBUG
+                print("set")
+#endif
             })
         }
     }
@@ -158,7 +153,7 @@ struct CircularToggleStyle: ToggleStyle {
             .cornerRadius(sideLength)
             .onTapGesture {
                 configuration.$isOn.wrappedValue.toggle()
-        }
+            }
     }
 }
 

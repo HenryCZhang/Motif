@@ -18,7 +18,7 @@ class Recorder: ObservableObject {
         var accelerationToggle: Bool = true
         var rotationRateToggle: Bool = true
         var magneticFieldToggle: Bool = true
-        var extraDataToggle: Bool = false
+//        var extraDataToggle: Bool = false
     }
     
     private let encoder = JSONEncoder()
@@ -58,15 +58,15 @@ class Recorder: ObservableObject {
         
         guard manager.isDeviceAvailable == true else { return }
         
-        if (!(setting.accelerationToggle || setting.rotationRateToggle || setting.magneticFieldToggle)){
-            setting.extraDataToggle = false
-        }
-        
+//        if (!(setting.accelerationToggle || setting.rotationRateToggle || setting.magneticFieldToggle)){
+//            setting.extraDataToggle = false
+//        }
+//
         // Set sampling intervals
         manager.accelerometerUpdateInterval = samplingInterval
         manager.gyroUpdateInterval          = samplingInterval
         manager.magnetometerUpdateInterval  = samplingInterval
-        manager.deviceMotionUpdateInterval  = samplingInterval
+//        manager.deviceMotionUpdateInterval  = samplingInterval
         
         // Start data updates
         if (setting.accelerationToggle){
@@ -78,9 +78,9 @@ class Recorder: ObservableObject {
         if (setting.magneticFieldToggle){
             manager.startMagnetometerUpdates()
         }
-        if (setting.extraDataToggle){
-            manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
-        }
+//        if (setting.extraDataToggle){
+//            manager.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
+//        }
         
         // Initialize data storage
         currentDataRecord = MotionDataSample(startTime: Date(), samplingRate: setting.samplingRate)
@@ -94,7 +94,7 @@ class Recorder: ObservableObject {
                     let accelerometerData = self.manager.accelerometerData
                     let gyroData = self.manager.gyroData
                     let magnetometerData = self.manager.magnetometerData
-                    let deviceMotion = self.manager.deviceMotion
+//                    let deviceMotion = self.manager.deviceMotion
                     
                     self.currentDataEntry = MotionDataEntry(
                         accelerometerData: accelerometerData,
@@ -102,9 +102,9 @@ class Recorder: ObservableObject {
                         gyroData: gyroData,
                         rotationRateToggle: self.setting.rotationRateToggle,
                         magnetometerData: magnetometerData,
-                        magneticFieldToggle: self.setting.magneticFieldToggle,
-                        deviceMotion: deviceMotion,
-                        extraDataToggle: self.setting.extraDataToggle
+                        magneticFieldToggle: self.setting.magneticFieldToggle
+//                        deviceMotion: deviceMotion,
+//                        extraDataToggle: self.setting.extraDataToggle
                     )
                     // Save motion data to entry and record
                     self.currentDataRecord?.addEntry(self.currentDataEntry)
@@ -123,7 +123,7 @@ class Recorder: ObservableObject {
         manager.stopAccelerometerUpdates()
         manager.stopGyroUpdates()
         manager.stopMagnetometerUpdates()
-        manager.stopDeviceMotionUpdates()
+//        manager.stopDeviceMotionUpdates()
         
         // Add new record to record list
         guard let record = currentDataRecord else { return }
@@ -207,6 +207,6 @@ extension CMMotionManager {
         return isAccelerometerAvailable
         && isGyroAvailable
         && isMagnetometerAvailable
-        && isDeviceMotionAvailable
+//        && isDeviceMotionAvailable
     }
 }

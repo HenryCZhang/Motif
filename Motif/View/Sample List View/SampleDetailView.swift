@@ -49,225 +49,125 @@ struct SampleDetailView: View {
             
             if(sample.entries.first?.accelerometerData?.acceleration.x != nil){
                 Section(header: Text("Raw Acceleration").font(.subheadline).bold()) {
+                    HStack{
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map {
+                                    ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.x) })
+                            .frame(height: 100)
+                            Text("x").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.enumerated().map { (index,element) in
+                                    (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.y) })
+                            .frame(height: 100)
+                            Text("y").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.enumerated().map { (index,element) in
+                                    (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.z) })
+                            .frame(height: 100)
+                            Text("z").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
+                    //Horizontally aligned FFT graphs
                     HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map {
-                                ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                    HStack {
-                        Text("x-FFT").font(.headline)
-                        LineChart(
-                            data: sample.entries.enumerated().map { (index,element) in
-                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.x})[index]) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.enumerated().map { (index,element) in
-                                (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y-FFT").font(.headline)
-                        LineChart(
-                            data: sample.entries.enumerated().map { (index,element) in
-                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.y})[index]) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.enumerated().map { (index,element) in
-                                (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z-FFT").font(.headline)
-                        LineChart(
-                            data: sample.entries.enumerated().map { (index,element) in
-                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.z})[index]) })
-                        .frame(height: 100)
-                    }.padding()
-                    
+                        VStack {
+                            LineChart(
+                                data: sample.entries.enumerated().map { (index,element) in
+                                    (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.x})[index]) })
+                            .frame(height: 100)
+                            Text("x-FFT").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.enumerated().map { (index,element) in
+                                    (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.y})[index]) })
+                            .frame(height: 100)
+                            Text("y-FFT").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.enumerated().map { (index,element) in
+                                    (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.z})[index]) })
+                            .frame(height: 100)
+                            Text("z-FFT").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
+                    //Vertically aligned FFT graphs
+//                    HStack {
+//                        LineChart(
+//                            data: sample.entries.enumerated().map { (index,element) in
+//                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.x})[index]) })
+//                        .frame(height: 100)
+//                        Text("x-FFT").font(.headline)
+//                    }.padding([.top, .bottom])
+//                    HStack {
+//                        LineChart(
+//                            data: sample.entries.enumerated().map { (index,element) in
+//                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.y})[index]) })
+//                        .frame(height: 100)
+//                        Text("y-FFT").font(.headline)
+//                    }.padding([.top, .bottom])
+//                    HStack {
+//                        LineChart(
+//                            data: sample.entries.enumerated().map { (index,element) in
+//                                (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.z})[index]) })
+//                        .frame(height: 100)
+//                        Text("z-FFT").font(.headline)
+//                    }.padding([.top, .bottom])
                 }
             }
             
             if(sample.entries.first?.gyroData?.rotationRate.x != nil){
                 Section(header: Text("Raw Rotation Rate").font(.subheadline).bold()) {
-                    
                     HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
+                            .frame(height: 100)
+                            Text("x").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
+                            .frame(height: 100)
+                            Text("y").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
+                            .frame(height: 100)
+                            Text("z").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
                 }
             }
             
             if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
                 Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
-                    
                     HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-            }
-            
-            if(sample.entries.first?.deviceMotion != nil){
-                Section(header: Text("Processed Attitude").font(.subheadline).bold()) {
-                    
-                    HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.attitude.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-                
-                Section(header: Text("Processed Rotation Rate").font(.subheadline).bold()) {
-                    
-                    HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.rotationRate.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-                
-                Section(header: Text("Processed Gravity").font(.subheadline).bold()) {
-                    
-                    HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.gravity.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-                
-                Section(header: Text("Processed User Acceleration").font(.subheadline).bold()) {
-                    
-                    HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.userAcceleration.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-                
-                Section(header: Text("Processed Magnetic Field").font(.subheadline).bold()) {
-                    
-                    HStack {
-                        Text("x").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.x) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("y").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.y) })
-                        .frame(height: 100)
-                    }.padding()
-                    HStack {
-                        Text("z").font(.headline)
-                        LineChart(
-                            data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.magneticField.z) })
-                        .frame(height: 100)
-                    }.padding()
-                    
-                }
-                
-                Section(header: Text("Processed heading").font(.subheadline).bold()) {
-                    
-                    LineChart(data: sample.entries.map { ($0.deviceMotion.timeSinceBoot, $0.deviceMotion.heading) })
-                        .frame(height: 100)
-                        .padding()
-                    
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
+                            .frame(height: 100)
+                            Text("x").font(.headline)
+                        }.padding([.top, .bottom])
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
+                            .frame(height: 100)
+                            Text("y").font(.headline)
+                        }.padding([.top, .bottom])
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
+                            .frame(height: 100)
+                            Text("z").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
                 }
             }
             

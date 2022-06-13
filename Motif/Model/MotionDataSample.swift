@@ -36,9 +36,9 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     var accelerometerDataLastTimestamp:  Date? { entries.last?.accelerometerData?.timestamp }
     var gyroDataLastTimestamp:           Date? { entries.last?.gyroData?.timestamp }
     var magnetometerDataLastTimestamp:   Date? { entries.last?.magnetometerData?.timestamp }
-    var deviceMotionDataLastTimestamp:   Date? { entries.last?.deviceMotion?.timestamp }
+//    var deviceMotionDataLastTimestamp:   Date? { entries.last?.deviceMotion?.timestamp }
     var lastTimestamp: Date? {
-        let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp, deviceMotionDataLastTimestamp]
+        let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp]
         if(timestamps.compactMap { $0 }.max() == nil){
             return Date()
         }
@@ -68,9 +68,9 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
         if (entries.first?.magnetometerData != nil){
             dataKeyPathsCollection.append(contentsOf: MotionDataEntry.magnet)
         }
-        if (entries.first?.deviceMotion != nil){
-            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.device)
-        }
+//        if (entries.first?.deviceMotion != nil){
+//            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.device)
+//        }
         
         let titles = ["No"] + Self.metadataTitles + dataKeyPathsCollection.map{ $0.1 }
         let container = CSVContainer(titles: titles, delimiter: delimiter)
