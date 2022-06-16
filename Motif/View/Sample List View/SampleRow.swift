@@ -3,7 +3,7 @@
 //  Motif
 //
 //  Created by Pan Weiheng on 2020/4/2.
-//
+//  Updated by Cao Zhang & Lunjie Li
 
 import SwiftUI
 

@@ -3,7 +3,7 @@
 //  Motif
 //
 //  Created by Pan Weiheng on 2020/3/29.
-//
+//  Updated by Cao Zhang & Lunjie Li
 
 import Combine
 import SwiftUI
@@ -12,7 +12,7 @@ struct RecorderView: View {
     
     @EnvironmentObject var recorder: Recorder
     var entry: MotionDataEntry { recorder.currentDataEntry }
-    
+        
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy.MM.dd HH:mm:ss"
@@ -26,31 +26,12 @@ struct RecorderView: View {
     
     var body: some View {
         
-        NavigationView {
+         NavigationView {
             
             Form {
                 if recorder.isRecording == false {
                     
                     // MARK: Record Settings
-                    
-                    Section {
-                        Toggle(isOn: $recorder.setting.useTimer.animation()) {
-                            HStack {
-                                Image(systemName: "timer")
-                                Text("Timer")
-                            }
-                        }
-                        
-                        if recorder.setting.useTimer {
-                            DatePicker(selection: $recorder.setting.endTime, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
-                                HStack {
-                                    Image(systemName: "calendar")
-                                    Text("End Time")
-                                }
-                            }
-                            .datePickerStyle(DefaultDatePickerStyle())
-                        }
-                    }
                     
                     Section {
                         ItemRow(
@@ -131,11 +112,11 @@ struct RecorderView: View {
             }
             .navigationTitle(recorder.isRecording ? "Recording" : "Record")
             .navigationBarItems(trailing:
-                                    Button(self.recorder.isRecording ? "Stop" : "") {
-                self.recorder.isRecording = false
-#if DEBUG
-                print("set")
-#endif
+                Button(self.recorder.isRecording ? "Stop" : "") {
+                    self.recorder.isRecording = false
+                    #if DEBUG
+                    print("set")
+                    #endif
             })
         }
     }
@@ -153,7 +134,7 @@ struct CircularToggleStyle: ToggleStyle {
             .cornerRadius(sideLength)
             .onTapGesture {
                 configuration.$isOn.wrappedValue.toggle()
-            }
+        }
     }
 }
 
