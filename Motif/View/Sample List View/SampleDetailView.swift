@@ -23,7 +23,7 @@ struct SampleDetailView: View {
     @State var shareActivitySheetFileFormat: ShareSampleActivityView.FileFormat = .csv
     @State private var isLoading = false
     @State private var buttonHidden = false
-    @State private var accFFT=[]
+    @State private var accFFT:[[(Double,Double)]] = []
     
     func getFFT(sample: MotionDataSample) {
         isLoading = true
@@ -35,7 +35,7 @@ struct SampleDetailView: View {
             let z = sample.entries.enumerated().map { (index,element) in
                 (element.accelerometerData.timeSinceBoot, Surge.fft(sample.entries.map {$0.accelerometerData.acceleration.z})[index]) }
             self.accFFT.append(contentsOf: [x,y,z])
-           isLoading = false
+            isLoading = false
         }
     }
     
@@ -54,171 +54,213 @@ struct SampleDetailView: View {
     var dateString: String { dateFormatter.string(from: sample.firstTimestamp!) }
     
     var body: some View {
-        
-        ZStack{
-            List {
-                Section(header: Text("Metadata").font(.subheadline).bold()) {
-                    ItemRow(name: "Start time",
-                            value: self.dateString)
-                    ItemRow(name: "Duration",
-                            value: dateComponentsFormatter.string(from: sample.duration!)!)
-                    ItemRow(name: "Sampling rate",
-                            value: "\(Int(sample.samplingRate)) Hz")
-                    ItemRow(name: "No. of entries",
-                            value: "\(sample.entries.count)")
-                }
-                
-                if(sample.entries.first?.accelerometerData?.acceleration.x != nil){
-                    Section(header: Text("Raw Acceleration").font(.subheadline).bold()) {
-                        HStack{
-                            VStack {
+      
+        List {
+            Section(header: Text("Metadata").font(.subheadline).bold()) {
+                ItemRow(name: "Start time",
+                        value: self.dateString)
+                ItemRow(name: "Duration",
+                        value: dateComponentsFormatter.string(from: sample.duration!)!)
+                ItemRow(name: "Sampling rate",
+                        value: "\(Int(sample.samplingRate)) Hz")
+                ItemRow(name: "No. of entries",
+                        value: "\(sample.entries.count)")
+            }
+            
+            if(sample.entries.first?.accelerometerData?.acceleration.x != nil){
+                Section(header: Text("Raw Acceleration").font(.subheadline).bold()) {
+                    //                    HStack{
+                    NavigationLink(destination: PlotDetailView(data: sample.entries.map {
+                        $0.accelerometerData.acceleration.x }, label: "Acceleration X")) {
+                            VStack {//testing
                                 LineChart(
                                     data: sample.entries.map {
                                         ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.x) })
                                 .frame(height: 100)
                                 Text("x").font(.headline)
                             }.padding([.top, .bottom])
-                            VStack {
+                        }
+                    
+                    NavigationLink(destination: PlotDetailView(data: sample.entries.map {
+                        $0.accelerometerData.acceleration.y }, label: "Acceleration Y")) {
+                            VStack {//testing
                                 LineChart(
-                                    data: sample.entries.enumerated().map { (index,element) in
-                                        (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.y) })
+                                    data: sample.entries.map {
+                                        ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.y) })
                                 .frame(height: 100)
                                 Text("y").font(.headline)
                             }.padding([.top, .bottom])
-                            VStack {
+                        }
+                    
+                    NavigationLink(destination: PlotDetailView(data: sample.entries.map {
+                        $0.accelerometerData.acceleration.z }, label: "Acceleration Z")) {
+                            VStack {//testing
                                 LineChart(
-                                    data: sample.entries.enumerated().map { (index,element) in
-                                        (element.accelerometerData.timeSinceBoot, element.accelerometerData.acceleration.z) })
+                                    data: sample.entries.map {
+                                        ($0.accelerometerData.timeSinceBoot, $0.accelerometerData.acceleration.z) })
                                 .frame(height: 100)
                                 Text("z").font(.headline)
                             }.padding([.top, .bottom])
                         }
-                        //Horizontally aligned FFT graphs
-                        if (!buttonHidden){
-                            Button("Show FFT"){
-                                getFFT(sample: sample)
-                                buttonHidden = true
-                            }
+                    //                    }
+                    
+                    //Horizontally aligned FFT graphs
+                    if (!buttonHidden){
+                        Button("Show FFT"){
+                            getFFT(sample: sample)
+                            buttonHidden = true
                         }
-                        if isLoading {
-                            LoadingView()//code at  the bottom
-                        }
-                        if(!isLoading && accFFT.count == 3){
-                            HStack {
+                    }
+                    if isLoading {
+                        LoadingView()//code at  the bottom
+                    }
+                    if(!isLoading && accFFT.count == 3){
+                        
+                        NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
+                            (index,element) in(
+                                element.1
+                            )
+                        }, label: "Acceleration FFT X")) {
+                            VStack {//testing
                                 VStack {
                                     LineChart(
-                                        data: accFFT[0] as! [(Double, Double)] )
+                                        data: accFFT[0] )
                                     .frame(height: 100)
                                     Text("x-FFT").font(.headline)
                                 }.padding([.top, .bottom])
+                            }
+                        }
+                        
+                        NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
+                            (index,element) in(
+                                element.1
+                            )
+                        }, label: "Acceleration FFT Y")) {
+                            VStack {//testing
                                 VStack {
                                     LineChart(
-                                        data: accFFT[1] as! [(Double, Double)])
+                                        data: accFFT[1] )
                                     .frame(height: 100)
                                     Text("y-FFT").font(.headline)
                                 }.padding([.top, .bottom])
+                            }
+                        }
+                        
+                        NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
+                            (index,element) in(
+                                element.1
+                            )
+                        }, label: "Acceleration FFT Z")) {
+                            VStack {//testing
                                 VStack {
                                     LineChart(
-                                        data: accFFT[2] as! [(Double, Double)])
+                                        data: accFFT[2] )
                                     .frame(height: 100)
                                     Text("z-FFT").font(.headline)
                                 }.padding([.top, .bottom])
                             }
-                            //Vertically aligned FFT graphs
-                            HStack {
-                                LineChart(
-                                    data: accFFT[0] as! [(Double, Double)] )
-                                .frame(height: 100)
-                                Text("x-FFT").font(.headline)
-                            }.padding([.top, .bottom])
-                            HStack {
-                                LineChart(
-                                    data: accFFT[1] as! [(Double, Double)])
-                                .frame(height: 100)
-                                Text("y-FFT").font(.headline)
-                            }.padding([.top, .bottom])
-                            HStack {
-                                LineChart(
-                                    data: accFFT[2] as! [(Double, Double)])
-                                .frame(height: 100)
-                                Text("z-FFT").font(.headline)
-                            }.padding([.top, .bottom])
-                            
                         }
+                        
+                        //                            VStack{
+                        //                                LineView(data: accFFT[0].enumerated().map{
+                        //                                    (index,element) in(
+                        //                                        element.1
+                        //                                    )
+                        //                                })
+                        //                                Text("x-FFT").font(.headline)
+                        //                            }
+                        
+                        
+//                        HStack {
+//                            VStack {
+//                                LineChart(
+//                                    data: accFFT[1] )
+//                                .frame(height: 100)
+//                                Text("y-FFT").font(.headline)
+//                            }.padding([.top, .bottom])
+//                            VStack {
+//                                LineChart(
+//                                    data: accFFT[2] )
+//                                .frame(height: 100)
+//                                Text("z-FFT").font(.headline)
+//                            }.padding([.top, .bottom])
+//                        }
+                        
                     }
                 }
-                
-                if(sample.entries.first?.gyroData?.rotationRate.x != nil){
-                    Section(header: Text("Raw Rotation Rate").font(.subheadline).bold()) {
-                        HStack {
-                            VStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
-                                .frame(height: 100)
-                                Text("x").font(.headline)
-                            }.padding([.top, .bottom])
-                            VStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
-                                .frame(height: 100)
-                                Text("y").font(.headline)
-                            }.padding([.top, .bottom])
-                            VStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
-                                .frame(height: 100)
-                                Text("z").font(.headline)
-                            }.padding([.top, .bottom])
-                        }
-                    }
-                }
-                
-                if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
-                    Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
-                        HStack {
-                            HStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
-                                .frame(height: 100)
-                                Text("x").font(.headline)
-                            }.padding([.top, .bottom])
-                            HStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
-                                .frame(height: 100)
-                                Text("y").font(.headline)
-                            }.padding([.top, .bottom])
-                            HStack {
-                                LineChart(
-                                    data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
-                                .frame(height: 100)
-                                Text("z").font(.headline)
-                            }.padding([.top, .bottom])
-                        }
-                    }
-                }
-                
             }
-            .listStyle(GroupedListStyle())
-            .navigationBarTitle(Text(self.dateString), displayMode: .inline)
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                self.isShowingShareActionSheet.toggle()
-            }) {
-                Image(systemName: "square.and.arrow.up")
-                    .actionSheet(isPresented: $isShowingShareActionSheet, content: { self.shareActionSheet })
-            })
-            .sheet(isPresented: $isShowingShareActivitySheet, content: {
-                ShareSampleActivityView(fileFormat: self.shareActivitySheetFileFormat, samples: [self.sample])
-            })
-            if(isLoading){
+            
+            if(sample.entries.first?.gyroData?.rotationRate.x != nil){
+                Section(header: Text("Raw Rotation Rate").font(.subheadline).bold()) {
+                    HStack {
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
+                            .frame(height: 100)
+                            Text("x").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
+                            .frame(height: 100)
+                            Text("y").font(.headline)
+                        }.padding([.top, .bottom])
+                        VStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
+                            .frame(height: 100)
+                            Text("z").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
+                }
+            }
+            
+            if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
+                Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
+                    HStack {
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
+                            .frame(height: 100)
+                            Text("x").font(.headline)
+                        }.padding([.top, .bottom])
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
+                            .frame(height: 100)
+                            Text("y").font(.headline)
+                        }.padding([.top, .bottom])
+                        HStack {
+                            LineChart(
+                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
+                            .frame(height: 100)
+                            Text("z").font(.headline)
+                        }.padding([.top, .bottom])
+                    }
+                }
+            }
+            
+        }
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle(Text(self.dateString), displayMode: .inline)
+        .navigationBarItems(trailing:
+                                Button(action: {
+            self.isShowingShareActionSheet.toggle()
+        }) {
+            Image(systemName: "square.and.arrow.up")
+                .actionSheet(isPresented: $isShowingShareActionSheet, content: { self.shareActionSheet })
+        })
+        .sheet(isPresented: $isShowingShareActivitySheet, content: {
+            ShareSampleActivityView(fileFormat: self.shareActivitySheetFileFormat, samples: [self.sample])
+        })
+        if(isLoading){
             ProgressView("Loading...")
                 .progressViewStyle(CircularProgressViewStyle())
                 .font(.largeTitle)
                 .blur(radius: 25)
-            }
         }
     }
+    
     
     private var shareActionSheet: ActionSheet {
         ActionSheet(title: Text("Share sample as..."), message: nil, buttons: [

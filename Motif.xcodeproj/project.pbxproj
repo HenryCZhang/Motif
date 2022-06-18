@@ -38,6 +38,8 @@
 		4CD2793E2435F34D0037E529 /* AccelerometerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD2793D2435F34D0037E529 /* AccelerometerData.swift */; };
 		4CD57F0F2434B8C50007C963 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD57F0E2434B8C50007C963 /* Recorder.swift */; };
 		4CE0CBB12434D4DA00494CD8 /* MotionDataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE0CBB02434D4DA00494CD8 /* MotionDataEntry.swift */; };
+		6B3208EB285BD54C007BB54C /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3208EA285BD54C007BB54C /* SwiftUICharts */; };
+		6B93415F285CEF8500D2FF18 /* PlotDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93415E285CEF8500D2FF18 /* PlotDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,7 @@
 		4CD2793D2435F34D0037E529 /* AccelerometerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerData.swift; sourceTree = "<group>"; };
 		4CD57F0E2434B8C50007C963 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		4CE0CBB02434D4DA00494CD8 /* MotionDataEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataEntry.swift; sourceTree = "<group>"; };
+		6B93415E285CEF8500D2FF18 /* PlotDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				338143682853E795007CD01F /* Surge in Frameworks */,
+				6B3208EB285BD54C007BB54C /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +163,7 @@
 				4C7979B2243ED33200B8460D /* SampleDetailView.swift */,
 				4C7979AE243E06B200B8460D /* LineChart.swift */,
 				4CB205C624376A8A0065C6E3 /* ShareSampleActivityView.swift */,
+				6B93415E285CEF8500D2FF18 /* PlotDetailView.swift */,
 			);
 			path = "Sample List View";
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 			name = Motif;
 			packageProductDependencies = (
 				338143672853E795007CD01F /* Surge */,
+				6B3208EA285BD54C007BB54C /* SwiftUICharts */,
 			);
 			productName = Motif;
 			productReference = 4CC980332430767400B36A7F /* Motif.app */;
@@ -345,6 +351,7 @@
 			mainGroup = 4CC9802A2430767400B36A7F;
 			packageReferences = (
 				338143662853E794007CD01F /* XCRemoteSwiftPackageReference "Surge" */,
+				6B3208E9285BD54C007BB54C /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 4CC980342430767400B36A7F /* Products */;
 			projectDirPath = "";
@@ -414,6 +421,7 @@
 				4CC980682430782700B36A7F /* Home.swift in Sources */,
 				4C32B1272434DB8500A4120F /* ItemRow.swift in Sources */,
 				4C103AED2435F52E004FCBC3 /* MagnetometerData.swift in Sources */,
+				6B93415F285CEF8500D2FF18 /* PlotDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +760,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		6B3208E9285BD54C007BB54C /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -759,6 +775,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 338143662853E794007CD01F /* XCRemoteSwiftPackageReference "Surge" */;
 			productName = Surge;
+		};
+		6B3208EA285BD54C007BB54C /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3208E9285BD54C007BB54C /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
