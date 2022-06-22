@@ -54,7 +54,7 @@ struct SampleDetailView: View {
     var dateString: String { dateFormatter.string(from: sample.firstTimestamp!) }
     
     var body: some View {
-      
+        
         List {
             Section(header: Text("Metadata").font(.subheadline).bold()) {
                 ItemRow(name: "Start time",
@@ -69,9 +69,8 @@ struct SampleDetailView: View {
             
             if(sample.entries.first?.accelerometerData?.acceleration.x != nil){
                 Section(header: Text("Raw Acceleration").font(.subheadline).bold()) {
-                    //                    HStack{
                     NavigationLink(destination: PlotDetailView(data: sample.entries.map {
-                        $0.accelerometerData.acceleration.x }, label: "Acceleration X")) {
+                        $0.accelerometerData.acceleration.x }, label: "Acceleration X",xLabel:"t(s)")) {
                             VStack {//testing
                                 LineChart(
                                     data: sample.entries.map {
@@ -82,7 +81,7 @@ struct SampleDetailView: View {
                         }
                     
                     NavigationLink(destination: PlotDetailView(data: sample.entries.map {
-                        $0.accelerometerData.acceleration.y }, label: "Acceleration Y")) {
+                        $0.accelerometerData.acceleration.y }, label: "Acceleration Y", xLabel:"t(s)")) {
                             VStack {//testing
                                 LineChart(
                                     data: sample.entries.map {
@@ -93,7 +92,7 @@ struct SampleDetailView: View {
                         }
                     
                     NavigationLink(destination: PlotDetailView(data: sample.entries.map {
-                        $0.accelerometerData.acceleration.z }, label: "Acceleration Z")) {
+                        $0.accelerometerData.acceleration.z }, label: "Acceleration Z",xLabel:"t(s)")) {
                             VStack {//testing
                                 LineChart(
                                     data: sample.entries.map {
@@ -102,7 +101,7 @@ struct SampleDetailView: View {
                                 Text("z").font(.headline)
                             }.padding([.top, .bottom])
                         }
-                    //                    }
+                    
                     
                     //Horizontally aligned FFT graphs
                     if (!buttonHidden){
@@ -120,7 +119,7 @@ struct SampleDetailView: View {
                             (index,element) in(
                                 element.1
                             )
-                        }, label: "Acceleration FFT X")) {
+                        }, label: "Acceleration FFT X",xLabel:"f(Hz)")) {
                             VStack {//testing
                                 VStack {
                                     LineChart(
@@ -135,7 +134,7 @@ struct SampleDetailView: View {
                             (index,element) in(
                                 element.1
                             )
-                        }, label: "Acceleration FFT Y")) {
+                        }, label: "Acceleration FFT Y",xLabel:"f(Hz)")) {
                             VStack {//testing
                                 VStack {
                                     LineChart(
@@ -150,7 +149,7 @@ struct SampleDetailView: View {
                             (index,element) in(
                                 element.1
                             )
-                        }, label: "Acceleration FFT Z")) {
+                        }, label: "Acceleration FFT Z",xLabel:"f(Hz)")) {
                             VStack {//testing
                                 VStack {
                                     LineChart(
@@ -171,20 +170,20 @@ struct SampleDetailView: View {
                         //                            }
                         
                         
-//                        HStack {
-//                            VStack {
-//                                LineChart(
-//                                    data: accFFT[1] )
-//                                .frame(height: 100)
-//                                Text("y-FFT").font(.headline)
-//                            }.padding([.top, .bottom])
-//                            VStack {
-//                                LineChart(
-//                                    data: accFFT[2] )
-//                                .frame(height: 100)
-//                                Text("z-FFT").font(.headline)
-//                            }.padding([.top, .bottom])
-//                        }
+                        //                        HStack {
+                        //                            VStack {
+                        //                                LineChart(
+                        //                                    data: accFFT[1] )
+                        //                                .frame(height: 100)
+                        //                                Text("y-FFT").font(.headline)
+                        //                            }.padding([.top, .bottom])
+                        //                            VStack {
+                        //                                LineChart(
+                        //                                    data: accFFT[2] )
+                        //                                .frame(height: 100)
+                        //                                Text("z-FFT").font(.headline)
+                        //                            }.padding([.top, .bottom])
+                        //                        }
                         
                     }
                 }
@@ -300,4 +299,3 @@ struct LoadingView: View{
         }
     }
 }
-
