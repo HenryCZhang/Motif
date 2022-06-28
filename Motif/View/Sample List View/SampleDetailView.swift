@@ -79,7 +79,7 @@ struct SampleDetailView: View {
                                 Text("x").font(.headline)
                             }.padding([.top, .bottom])
                         }
-                    
+
                     NavigationLink(destination: PlotDetailView(data: sample.entries.map {
                         $0.accelerometerData.acceleration.y }, label: "Acceleration Y", xLabel:"t(s)")) {
                             VStack {//testing
@@ -90,7 +90,7 @@ struct SampleDetailView: View {
                                 Text("y").font(.headline)
                             }.padding([.top, .bottom])
                         }
-                    
+
                     NavigationLink(destination: PlotDetailView(data: sample.entries.map {
                         $0.accelerometerData.acceleration.z }, label: "Acceleration Z",xLabel:"t(s)")) {
                             VStack {//testing
@@ -101,8 +101,8 @@ struct SampleDetailView: View {
                                 Text("z").font(.headline)
                             }.padding([.top, .bottom])
                         }
-                    
-                    
+
+
                     //Horizontally aligned FFT graphs
                     if (!buttonHidden){
                         Button("Show FFT"){
@@ -114,7 +114,7 @@ struct SampleDetailView: View {
                         LoadingView()//code at  the bottom
                     }
                     if(!isLoading && accFFT.count == 3){
-                        
+
                         NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
                             (index,element) in(
                                 element.1
@@ -129,7 +129,7 @@ struct SampleDetailView: View {
                                 }.padding([.top, .bottom])
                             }
                         }
-                        
+
                         NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
                             (index,element) in(
                                 element.1
@@ -144,7 +144,7 @@ struct SampleDetailView: View {
                                 }.padding([.top, .bottom])
                             }
                         }
-                        
+
                         NavigationLink(destination: PlotDetailView(data: accFFT[0].enumerated().map{
                             (index,element) in(
                                 element.1
@@ -159,32 +159,7 @@ struct SampleDetailView: View {
                                 }.padding([.top, .bottom])
                             }
                         }
-                        
-                        //                            VStack{
-                        //                                LineView(data: accFFT[0].enumerated().map{
-                        //                                    (index,element) in(
-                        //                                        element.1
-                        //                                    )
-                        //                                })
-                        //                                Text("x-FFT").font(.headline)
-                        //                            }
-                        
-                        
-                        //                        HStack {
-                        //                            VStack {
-                        //                                LineChart(
-                        //                                    data: accFFT[1] )
-                        //                                .frame(height: 100)
-                        //                                Text("y-FFT").font(.headline)
-                        //                            }.padding([.top, .bottom])
-                        //                            VStack {
-                        //                                LineChart(
-                        //                                    data: accFFT[2] )
-                        //                                .frame(height: 100)
-                        //                                Text("z-FFT").font(.headline)
-                        //                            }.padding([.top, .bottom])
-                        //                        }
-                        
+
                     }
                 }
             }
@@ -213,7 +188,7 @@ struct SampleDetailView: View {
                     }
                 }
             }
-            
+
             if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
                 Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
                     HStack {
