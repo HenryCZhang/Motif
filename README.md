@@ -3,6 +3,10 @@
 <img src="Preview%20Images/Icon.png" width=250 />
 
 A simple motion sensor data recorder for iPhone. Written with SwiftUI.
+(Forked from https://github.com/weihengpan/Motif)
+
+## Preview
+https://user-images.githubusercontent.com/71099565/181344579-4d388dac-9acb-450f-a76b-8ca822f91d5b.mp4
 
 ## Features
 ✔️ Records sensor data from accelerometer, gyroscope and magnetometer
@@ -23,17 +27,7 @@ A simple motion sensor data recorder for iPhone. Written with SwiftUI.
 Built on Xcode 11.3.1 and tested on iOS 13.3.1.
 
 ## Todo
-- [ ] Timer (using CMSensorRecorder; accelerometer data only)
+- A more precise acceleration FFT plotter
 
 ## License
 MIT license.
-
-## Previews
-
-<img src="Preview%20Images/Record.png" width=300 />
-
-<img src="Preview%20Images/Recording.png" width=300 />
-
-<img src="Preview%20Images/Samples.png" width=300 />
-
-<img src="Preview%20Images/Sample_Detail.jpg" width=300 />
