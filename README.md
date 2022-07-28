@@ -26,6 +26,11 @@ https://user-images.githubusercontent.com/71099565/181344579-4d388dac-9acb-450f-
 ## Compatability
 Built on Xcode 11.3.1 and tested on iOS 13.3.1.
 
+## Required Packages
+<div>📦 Surge 2.3.2 (package URL: https://github.com/Jounce/Surge.git)</div>
+<div>📦 SwiftUICharts 1.5.5 (package URL: https://github.com/willdale/SwiftUICharts)</div>
+
+
 ## Todo
 - A more precise acceleration FFT plotter
 
