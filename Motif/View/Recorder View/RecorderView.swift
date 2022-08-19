@@ -73,24 +73,7 @@ struct RecorderView: View {
                             ItemRow(name: "z", value: "\(entry.accelerometerData.acceleration.z) G")
                         }
                     }
-                    
-                    if entry.gyroData != nil && recorder.setting.rotationRateToggle{
-                        Section(header: Text("Gyroscope").font(.subheadline).bold()) {
-                            ItemRow(name: "timestamp", value: dateFormatter.string(from: entry.gyroData.timestamp))
-                            ItemRow(name: "x", value: "\(entry.gyroData.rotationRate.x) rad/s")
-                            ItemRow(name: "y", value: "\(entry.gyroData.rotationRate.y) rad/s")
-                            ItemRow(name: "z", value: "\(entry.gyroData.rotationRate.z) rad/s")
-                        }
-                    }
-                    
-                    if entry.magnetometerData != nil && recorder.setting.magneticFieldToggle{
-                        Section(header: Text("Magnetometer").font(.subheadline).bold()) {
-                            ItemRow(name: "timestamp", value: dateFormatter.string(from: entry.magnetometerData.timestamp))
-                            ItemRow(name: "x", value: "\(entry.magnetometerData.magneticField.x) mT")
-                            ItemRow(name: "y", value: "\(entry.magnetometerData.magneticField.y) mT")
-                            ItemRow(name: "z", value: "\(entry.magnetometerData.magneticField.z) mT")
-                        }
-                    }
+                
                 }
                 
                 // MARK: Start/Stop Button

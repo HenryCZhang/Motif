@@ -10,7 +10,6 @@
 		338143682853E795007CD01F /* Surge in Frameworks */ = {isa = PBXBuildFile; productRef = 338143672853E795007CD01F /* Surge */; };
 		4C103AEB2435F501004FCBC3 /* GyroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C103AEA2435F501004FCBC3 /* GyroData.swift */; };
 		4C103AED2435F52E004FCBC3 /* MagnetometerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C103AEC2435F52E004FCBC3 /* MagnetometerData.swift */; };
-		4C103AEF243606B1004FCBC3 /* DeviceMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C103AEE243606B1004FCBC3 /* DeviceMotion.swift */; };
 		4C32B1272434DB8500A4120F /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C32B1262434DB8500A4120F /* ItemRow.swift */; };
 		4C32B12B2434F2D500A4120F /* CMLogItem+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C32B12A2434F2D500A4120F /* CMLogItem+Date.swift */; };
 		4C7979AF243E06B200B8460D /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7979AE243E06B200B8460D /* LineChart.swift */; };
@@ -62,7 +61,6 @@
 /* Begin PBXFileReference section */
 		4C103AEA2435F501004FCBC3 /* GyroData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GyroData.swift; sourceTree = "<group>"; };
 		4C103AEC2435F52E004FCBC3 /* MagnetometerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetometerData.swift; sourceTree = "<group>"; };
-		4C103AEE243606B1004FCBC3 /* DeviceMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMotion.swift; sourceTree = "<group>"; };
 		4C32B1262434DB8500A4120F /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 		4C32B12A2434F2D500A4120F /* CMLogItem+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMLogItem+Date.swift"; sourceTree = "<group>"; };
 		4C7979AE243E06B200B8460D /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
@@ -252,7 +250,6 @@
 				4CD2793D2435F34D0037E529 /* AccelerometerData.swift */,
 				4C103AEA2435F501004FCBC3 /* GyroData.swift */,
 				4C103AEC2435F52E004FCBC3 /* MagnetometerData.swift */,
-				4C103AEE243606B1004FCBC3 /* DeviceMotion.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -405,7 +402,6 @@
 				4CB205C924376CDF0065C6E3 /* FileManager+.swift in Sources */,
 				4CC980372430767400B36A7F /* AppDelegate.swift in Sources */,
 				4CC9806C2430E30A00B36A7F /* SampleListView.swift in Sources */,
-				4C103AEF243606B1004FCBC3 /* DeviceMotion.swift in Sources */,
 				4CE0CBB12434D4DA00494CD8 /* MotionDataEntry.swift in Sources */,
 				4C103AEB2435F501004FCBC3 /* GyroData.swift in Sources */,
 				4CD2793E2435F34D0037E529 /* AccelerometerData.swift in Sources */,
@@ -593,7 +589,7 @@
 				DEVELOPMENT_TEAM = 2NW62J9U33;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Motif/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -614,7 +610,7 @@
 				DEVELOPMENT_TEAM = 2NW62J9U33;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Motif/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

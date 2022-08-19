@@ -11,9 +11,8 @@ struct MotionDataEntry: Codable, Equatable, Hashable, Identifiable {
     
     var id = UUID()
     var accelerometerData: AccelerometerData! = nil
-    var gyroData:          GyroData!          = nil
-    var magnetometerData:  MagnetometerData!  = nil
-//    var deviceMotion:      DeviceMotion!      = nil
+//    var gyroData:          GyroData!          = nil
+//    var magnetometerData:  MagnetometerData!  = nil
     
     static let acc: [(PartialKeyPath<MotionDataEntry>, String)] = [
         /* Accelerometer */
@@ -26,70 +25,43 @@ struct MotionDataEntry: Codable, Equatable, Hashable, Identifiable {
         (\MotionDataEntry.accelerometerData?.acceleration.z,                        "rawAccelerationZ")
     ]
     
-    static let gyro: [(PartialKeyPath<MotionDataEntry>, String)] = [
-        /* Gyroscope */
-        
-        (\MotionDataEntry.gyroData?.timestamp,                                      "gyroscopeTimestamp"),
-        (\MotionDataEntry.gyroData?.timeSinceBoot,                                  "gyroscopeTimeSinceBoot"),
-        
-        (\MotionDataEntry.gyroData?.rotationRate.x,                                 "rawRotationRateX"),
-        (\MotionDataEntry.gyroData?.rotationRate.y,                                 "rawRotationRateY"),
-        (\MotionDataEntry.gyroData?.rotationRate.z,                                 "rawRotationRateZ")
-    ]
-    
-    static let magnet: [(PartialKeyPath<MotionDataEntry>, String)] = [
-        /* Magnetometer */
-        
-        (\MotionDataEntry.magnetometerData?.timestamp,                              "magnetometerTimestamp"),
-        (\MotionDataEntry.magnetometerData?.timeSinceBoot,                          "magnetometerTimeSinceBoot"),
-        (\MotionDataEntry.magnetometerData?.magneticField.x,                        "rawMagneticFieldX"),
-        (\MotionDataEntry.magnetometerData?.magneticField.y,                        "rawMagneticFieldY"),
-        (\MotionDataEntry.magnetometerData?.magneticField.z,                        "rawMagneticFieldZ"),
-    ]
-    
-//    static let device: [(PartialKeyPath<MotionDataEntry>, String)] = [
-//        /* Device motion */
+//    static let gyro: [(PartialKeyPath<MotionDataEntry>, String)] = [
+//        /* Gyroscope */
 //
-//        (\MotionDataEntry.deviceMotion?.timestamp,                                  "processedDataTimestamp"),
-//        (\MotionDataEntry.deviceMotion?.timeSinceBoot,                              "processedDataTimeSinceBoot"),
+//        (\MotionDataEntry.gyroData?.timestamp,                                      "gyroscopeTimestamp"),
+//        (\MotionDataEntry.gyroData?.timeSinceBoot,                                  "gyroscopeTimeSinceBoot"),
 //
-//        (\MotionDataEntry.deviceMotion?.attitude.x,                                 "processedAttitudeX"),
-//        (\MotionDataEntry.deviceMotion?.attitude.y,                                 "processedAttitudeY"),
-//        (\MotionDataEntry.deviceMotion?.attitude.z,                                 "processedAttitudeZ"),
-//        (\MotionDataEntry.deviceMotion?.rotationRate.x,                             "processedRotationRateX"),
-//        (\MotionDataEntry.deviceMotion?.rotationRate.y,                             "processedRotationRateY"),
-//        (\MotionDataEntry.deviceMotion?.rotationRate.z,                             "processedRotationRateZ"),
+//        (\MotionDataEntry.gyroData?.rotationRate.x,                                 "rawRotationRateX"),
+//        (\MotionDataEntry.gyroData?.rotationRate.y,                                 "rawRotationRateY"),
+//        (\MotionDataEntry.gyroData?.rotationRate.z,                                 "rawRotationRateZ")
+//    ]
 //
-//        (\MotionDataEntry.deviceMotion?.gravity.x,                                  "processedGravityX"),
-//        (\MotionDataEntry.deviceMotion?.gravity.y,                                  "processedGravityY"),
-//        (\MotionDataEntry.deviceMotion?.gravity.z,                                  "processedGravityZ"),
-//        (\MotionDataEntry.deviceMotion?.userAcceleration.x,                         "processedUserAccelerationX"),
-//        (\MotionDataEntry.deviceMotion?.userAcceleration.y,                         "processedUserAccelerationY"),
-//        (\MotionDataEntry.deviceMotion?.userAcceleration.z,                         "processedUserAccelerationZ"),
+//    static let magnet: [(PartialKeyPath<MotionDataEntry>, String)] = [
+//        /* Magnetometer */
 //
-//        (\MotionDataEntry.deviceMotion?.magneticField.x,                            "processedMagneticFieldX"),
-//        (\MotionDataEntry.deviceMotion?.magneticField.y,                            "processedMagneticFieldY"),
-//        (\MotionDataEntry.deviceMotion?.magneticField.z,                            "processedMagneticFieldZ"),
-//        (\MotionDataEntry.deviceMotion?.magneticFieldCalibrationAccuracy.rawValue,  "processedMagneticFieldCalibrationAccuracy"),
-//
-//        (\MotionDataEntry.deviceMotion?.heading,                                    "processedHeading")
+//        (\MotionDataEntry.magnetometerData?.timestamp,                              "magnetometerTimestamp"),
+//        (\MotionDataEntry.magnetometerData?.timeSinceBoot,                          "magnetometerTimeSinceBoot"),
+//        (\MotionDataEntry.magnetometerData?.magneticField.x,                        "rawMagneticFieldX"),
+//        (\MotionDataEntry.magnetometerData?.magneticField.y,                        "rawMagneticFieldY"),
+//        (\MotionDataEntry.magnetometerData?.magneticField.z,                        "rawMagneticFieldZ"),
 //    ]
     
+
     static var keyPathsAndTitles: [(PartialKeyPath<MotionDataEntry>, String)] = []
     
-    init(accelerometerData: CMAccelerometerData?, accelerationToggle: Bool, gyroData: CMGyroData?, rotationRateToggle: Bool, magnetometerData: CMMagnetometerData?,  magneticFieldToggle: Bool) {
+    init(accelerometerData: CMAccelerometerData?, accelerationToggle: Bool) {
         if (accelerationToggle){
             MotionDataEntry.keyPathsAndTitles.append(contentsOf: MotionDataEntry.acc)
             self.accelerometerData = AccelerometerData(fromData: accelerometerData!)
         }
-        if (rotationRateToggle){
-            MotionDataEntry.keyPathsAndTitles.append(contentsOf: MotionDataEntry.gyro)
-            self.gyroData = GyroData(fromData: gyroData!)
-        }
-        if(magneticFieldToggle){
-            MotionDataEntry.keyPathsAndTitles.append(contentsOf: MotionDataEntry.magnet)
-            self.magnetometerData = MagnetometerData(fromData: magnetometerData!)
-        }
+//        if (rotationRateToggle){
+//            MotionDataEntry.keyPathsAndTitles.append(contentsOf: MotionDataEntry.gyro)
+//            self.gyroData = GyroData(fromData: gyroData!)
+//        }
+//        if(magneticFieldToggle){
+//            MotionDataEntry.keyPathsAndTitles.append(contentsOf: MotionDataEntry.magnet)
+//            self.magnetometerData = MagnetometerData(fromData: magnetometerData!)
+//        }
     }
     
     init() {}

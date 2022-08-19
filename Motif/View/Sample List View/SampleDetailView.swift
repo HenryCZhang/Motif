@@ -163,57 +163,7 @@ struct SampleDetailView: View {
                     }
                 }
             }
-            
-            if(sample.entries.first?.gyroData?.rotationRate.x != nil){
-                Section(header: Text("Raw Rotation Rate").font(.subheadline).bold()) {
-                    HStack {
-                        VStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.x) })
-                            .frame(height: 100)
-                            Text("x").font(.headline)
-                        }.padding([.top, .bottom])
-                        VStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.y) })
-                            .frame(height: 100)
-                            Text("y").font(.headline)
-                        }.padding([.top, .bottom])
-                        VStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.gyroData.timeSinceBoot, $0.gyroData.rotationRate.z) })
-                            .frame(height: 100)
-                            Text("z").font(.headline)
-                        }.padding([.top, .bottom])
-                    }
-                }
-            }
 
-            if(sample.entries.first?.magnetometerData?.magneticField.x != nil){
-                Section(header: Text("Raw Magnetic Field").font(.subheadline).bold()) {
-                    HStack {
-                        HStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.x) })
-                            .frame(height: 100)
-                            Text("x").font(.headline)
-                        }.padding([.top, .bottom])
-                        HStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.y) })
-                            .frame(height: 100)
-                            Text("y").font(.headline)
-                        }.padding([.top, .bottom])
-                        HStack {
-                            LineChart(
-                                data: sample.entries.map { ($0.magnetometerData.timeSinceBoot, $0.magnetometerData.magneticField.z) })
-                            .frame(height: 100)
-                            Text("z").font(.headline)
-                        }.padding([.top, .bottom])
-                    }
-                }
-            }
-            
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(self.dateString), displayMode: .inline)

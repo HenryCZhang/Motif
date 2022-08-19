@@ -34,11 +34,11 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
     }
     
     var accelerometerDataLastTimestamp:  Date? { entries.last?.accelerometerData?.timestamp }
-    var gyroDataLastTimestamp:           Date? { entries.last?.gyroData?.timestamp }
-    var magnetometerDataLastTimestamp:   Date? { entries.last?.magnetometerData?.timestamp }
-//    var deviceMotionDataLastTimestamp:   Date? { entries.last?.deviceMotion?.timestamp }
+//    var gyroDataLastTimestamp:           Date? { entries.last?.gyroData?.timestamp }
+//    var magnetometerDataLastTimestamp:   Date? { entries.last?.magnetometerData?.timestamp }
+    
     var lastTimestamp: Date? {
-        let timestamps = [accelerometerDataLastTimestamp, gyroDataLastTimestamp, magnetometerDataLastTimestamp]
+        let timestamps = [accelerometerDataLastTimestamp]
         if(timestamps.compactMap { $0 }.max() == nil){
             return Date()
         }
@@ -62,14 +62,11 @@ struct MotionDataSample: Codable, Equatable, Hashable, Identifiable {
         if (entries.first?.accelerometerData != nil){
             dataKeyPathsCollection.append(contentsOf: MotionDataEntry.acc)
         }
-        if (entries.first?.gyroData != nil){
-            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.gyro)
-        }
-        if (entries.first?.magnetometerData != nil){
-            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.magnet)
-        }
-//        if (entries.first?.deviceMotion != nil){
-//            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.device)
+//        if (entries.first?.gyroData != nil){
+//            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.gyro)
+//        }
+//        if (entries.first?.magnetometerData != nil){
+//            dataKeyPathsCollection.append(contentsOf: MotionDataEntry.magnet)
 //        }
         
         let titles = ["No"] + Self.metadataTitles + dataKeyPathsCollection.map{ $0.1 }
