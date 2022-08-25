@@ -47,12 +47,12 @@ struct RecorderView: View {
                         Toggle(isOn: $recorder.setting.accelerationToggle.animation()) {
                             Text("Acceleration")
                         }
-                        Toggle(isOn: $recorder.setting.rotationRateToggle.animation()) {
-                            Text("Rotation Rate")
-                        }
-                        Toggle(isOn: $recorder.setting.magneticFieldToggle.animation()) {
-                            Text("Magnetic Field")
-                        }
+//                        Toggle(isOn: $recorder.setting.rotationRateToggle.animation()) {
+//                            Text("Rotation Rate")
+//                        }
+//                        Toggle(isOn: $recorder.setting.magneticFieldToggle.animation()) {
+//                            Text("Magnetic Field")
+//                        }
                     }
                     
                     
