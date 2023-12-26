@@ -7,7 +7,7 @@ A simple motion sensor data recorder for iPhone. Written with SwiftUI.
 (Forked from https://github.com/weihengpan/Motif)
 
 ## Purpose
-This app is furthuer developed for the drive-by bridge health monitoring meathodology, in which acceleration data is collected and the acceleration FFT plots will be generated in the app. 
+This app is further developed for the drive-by bridge health monitoring methodology, in which acceleration data is collected and the acceleration FFT plots will be generated in the app. 
 
 
 <img src="Preview%20Images/app flow.png"  />
@@ -18,7 +18,7 @@ https://user-images.githubusercontent.com/71099565/181344579-4d388dac-9acb-450f-
 
 
 ## Features
-✔️ Records sensor data from accelerometer, gyroscope and magnetometer
+✔️ Records sensor data from the accelerometer, gyroscope, and magnetometer
 
 ✔️ Records both raw and processed data
 
