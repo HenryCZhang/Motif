@@ -6,6 +6,9 @@
 A simple motion sensor data recorder for iPhone. Written with SwiftUI.
 (Forked from https://github.com/weihengpan/Motif)
 
+## Description
+The iPhone app is ingeniously crafted to streamline the process of recording motion sensor data, offering unparalleled versatility in its applications. With a primary focus on structural health monitoring (SHM) within the realm of civil engineering, the app emerges as an indispensable tool for professionals and researchers alike. Its innovative features are tailored to accommodate the evolving needs of the industry, including the revolutionary drive-by bridge health monitoring methodology. Through this groundbreaking approach, the app facilitates the seamless collection of acceleration data, enabling users to conduct comprehensive assessments of bridge structural integrity. Furthermore, the app boasts advanced functionality, empowering users to generate acceleration Fast Fourier Transform (FFT) plots directly within the interface, thus enhancing efficiency and data analysis capabilities. As a result, the app emerges as an indispensable asset in the arsenal of engineers and researchers, revolutionizing the landscape of structural health monitoring and paving the way for enhanced safety and reliability in infrastructure.
+
 ## Purpose
 This app is further developed for the drive-by bridge health monitoring methodology, in which acceleration data is collected and the acceleration FFT plots will be generated in the app. 
 
