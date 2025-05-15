@@ -6,22 +6,26 @@
 A simple motion sensor data recorder for iPhone. Written with SwiftUI.
 (Forked from https://github.com/weihengpan/Motif)
 
+## Project Research Paper
+[Recent Advancements and Future Trends in Indirect Bridge Health Monitoring](https://www.researchgate.net/publication/367762536_Recent_Advancements_and_Future_Trends_in_Indirect_Bridge_Health_Monitoring)
+
 ## Description
 The iPhone app is crafted to streamline the process of recording motion sensor data, offering unparalleled versatility in its applications. With a primary focus on structural health monitoring (SHM) within the realm of civil engineering, the app emerges as an indispensable tool for professionals and researchers alike. Its innovative features are tailored to accommodate the evolving needs of the industry, including the revolutionary drive-by bridge health monitoring methodology. Through this groundbreaking approach, the app facilitates the seamless collection of acceleration data, enabling users to conduct comprehensive assessments of bridge structural integrity. Furthermore, the app boasts advanced functionality, empowering users to generate acceleration Fast Fourier Transform (FFT) plots directly within the interface, thus enhancing efficiency and data analysis capabilities. As a result, the app emerges as an indispensable asset in the arsenal of engineers and researchers, revolutionizing the landscape of structural health monitoring and paving the way for enhanced safety and reliability in infrastructure.
 
+* Researched and implemented the drive-by bridge health monitoring methodology based on requirements from a civil engineering professor, applied to Structural Health Monitoring (SHM) to enhance the efficiency of infrastructure safety assessments.
+* Independently learned iOS development and built an iPhone application using SwiftUI and Xcode , enabling real-time motion sensor data collection and analysis, including acceleration and gyroscope data logging.
+* Integrated Fast Fourier Transform (FFT) functionality for frequency-domain data analysis, significantly improving data processing efficiency.
+* Successfully reduced IoT data acquisition cycle time from 10 seconds to 4 seconds, achieving a 60% improvement in performance , providing strong support for rapid disaster response and structural integrity evaluation.
+* Authored comprehensive technical documentation and assisted the professor in writing academic papers related to the technology, facilitating the transformation of research outcomes into scholarly output.
+
 该项目通过利用前沿技术，专注于物联网、边缘计算和实时分析，推动结构健康监测方法的发展，以提高基础设施的安全性和可靠性。
 
-- IoT Structural Monitoring: Designed and implemented a sensor network integrated with anomaly detection algorithms, enhancing bridge health monitoring accuracy by 25% (reducing error rates from 8% to 6%). This system enabled real-time data collection and analysis for structural health monitoring (SHM) applications, including drive-by bridge health monitoring methodologies.
-  
-- Edge Computing System: Engineered a data transmission framework with database optimizations, reducing seismic data latency to 100ms. This system facilitated seamless integration between IoT sensors and a BIM-based digital twin, enabling real-time monitoring and risk assessment of structural behavior.
-  
-- iOS Real-Time Analytics App: Developed a SwiftUI-based iPhone app for motion sensor data collection and real-time analytics. Integrated Core ML for crack detection and Fast Fourier Transform (FFT) capabilities, accelerating IoT data collection by 60% (reducing cycle time from 10s to 4s) and enabling rapid disaster response and structural integrity assessments.
+* 根据建筑工程教授需求，研究并实现车载驶过式桥梁健康监测方法，用于桥梁结构健康监测（SHM），提升基础设施安全评估效率。
+* 独立学习 iOS 开发技术，使用 SwiftUI 和 Xcode 设计并开发 iPhone 应用程序，实现运动传感器数据采集与实时分析功能，支持加速度数据记录及陀螺仪数据。
+* 集成快速傅里叶变换（FFT） 功能进行频域数据分析，显著提高数据处理效率。
+* 成功将物联网数据采集周期从 10 秒缩短至 4 秒，效率提升 60% ，为灾害响应和结构完整性评估提供有力支持。
+* 撰写完整技术文档，并协助教授撰写该技术相关学术论文，推动研究成果向科研输出转化。
 
-- 物联网结构监测：设计并实现了一个集成异常检测算法的传感器网络，将桥梁健康监测的准确性提高了25%（错误率从8%降低至6%）。该系统支持实时数据收集和分析，适用于结构健康监测（SHM）应用，包括基于车辆行驶的桥梁健康监测方法。
-
-- 边缘计算系统：开发了一个具有数据库优化的数据传输框架，将地震数据延迟降低至100ms。该系统实现了物联网传感器与基于BIM的数字孪生模型的无缝集成，支持实时监测和结构行为的风险评估。
-
-- iOS实时分析应用程序：开发了一款基于SwiftUI的iPhone应用程序，用于运动传感器数据收集和实时分析。集成了Core ML用于裂缝检测和快速傅里叶变换（FFT）功能，将物联网数据收集速度提高了60%（周期时间从10秒缩短至4秒），从而支持快速灾害响应和结构完整性评估。
 
 ## Purpose
 This app is further developed for the drive-by bridge health monitoring methodology, in which acceleration data is collected and the acceleration FFT plots will be generated in the app. 
