@@ -30,12 +30,15 @@ The iPhone app is crafted to streamline the process of recording motion sensor d
 ## Purpose
 This app is further developed for the drive-by bridge health monitoring methodology, in which acceleration data is collected and the acceleration FFT plots will be generated in the app. 
 
-
+<div align="center">
 <img src="Preview%20Images/app flow.png"  />
-
+<img src="Preview%20Images/motif%20data%20export.JPG"  />
+</div>
 
 ## Preview
-https://user-images.githubusercontent.com/71099565/181344579-4d388dac-9acb-450f-a76b-8ca822f91d5b.mp4
+<div align="center">
+  <video src="https://user-images.githubusercontent.com/71099565/181344579-4d388dac-9acb-450f-a76b-8ca822f91d5b.mp4"/>
+</div>
 
 
 ## Features
